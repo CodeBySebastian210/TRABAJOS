@@ -1,6 +1,5 @@
 1. Concepto general:
-La búsqueda binaria es un algoritmo diseñado para encontrar rápidamente un elemento dentro de una lista ordenada. En cada iteración, divide el rango de búsqueda 
-a la mitad, descartando la mitad de los elementos que no pueden contener el valor buscado.
+La búsqueda binaria es un algoritmo diseñado para encontrar rápidamente un elemento dentro de una lista ordenada. En cada iteración, divide el rango de búsqueda a la mitad, descartando la mitad de los elementos que no pueden contener el valor buscado.
 
 2. Funcionamiento:
 - Se establecen dos índices: izquierda y derecha, que delimitan el rango.
