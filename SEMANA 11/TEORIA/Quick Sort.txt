@@ -1,4 +1,4 @@
-El archivo explica que el Quick Sort es un algoritmo de ordenación basado en la técnica de divide y vencerás, donde se:
+El Quick Sort es un algoritmo de ordenación basado en la técnica de divide y vencerás, donde se:
 -Divide el arreglo eligiendo un pivote.
 -Vence, separando los elementos menores a la izquierda y los mayores a la derecha.
 -Combina, aplicando recursivamente el proceso en cada sublista hasta ordenar todo el conjunto.
