@@ -42,11 +42,21 @@ public class BinarySearchGUI extends javax.swing.JFrame {
 
         jLabel2.setText("Número a buscar:");
 
-        jLabel3.setText("Resultado / Proceso:");
+        jLabel3.setText("Resultado / Proceso");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         areaLog.setColumns(20);
         areaLog.setRows(5);
@@ -59,11 +69,6 @@ public class BinarySearchGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(124, 124, 124)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
@@ -73,11 +78,17 @@ public class BinarySearchGUI extends javax.swing.JFrame {
                             .addComponent(txtNumeros)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
+                        .addGap(164, 164, 164)
                         .addComponent(btnBuscar)
-                        .addGap(113, 113, 113)
-                        .addComponent(btnLimpiar)))
-                .addContainerGap(139, Short.MAX_VALUE))
+                        .addGap(88, 88, 88)
+                        .addComponent(btnLimpiar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(226, 226, 226)
+                        .addComponent(jLabel3)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,12 +108,73 @@ public class BinarySearchGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        try {
+            String texto = txtNumeros.getText().trim();
+            String[] partes = texto.split(",");
+            int[] numeros = new int[partes.length];
+
+            for (int i = 0; i < partes.length; i++) {
+                numeros[i] = Integer.parseInt(partes[i].trim());
+            }
+
+            int buscado = Integer.parseInt(txtBuscar.getText().trim());
+            areaLog.setText(""); // limpiar log
+
+            areaLog.append("🔍 Iniciando búsqueda binaria del número " + buscado + "\n");
+            areaLog.append("Lista: " + java.util.Arrays.toString(numeros) + "\n\n");
+
+            int inicio = 0;
+            int fin = numeros.length - 1;
+            boolean encontrado = false;
+            int paso = 1;
+
+            while (inicio <= fin) {
+                int medio = (inicio + fin) / 2;
+                areaLog.append("Paso " + paso + ":\n");
+                areaLog.append("   Inicio = " + inicio + ", Fin = " + fin + ", Medio = " + medio + "\n");
+                areaLog.append("   Comparando con " + numeros[medio] + "...\n");
+
+                if (numeros[medio] == buscado) {
+                    areaLog.append("✅ El número " + buscado + " fue encontrado en la posición " + medio + ".\n");
+                    encontrado = true;
+                    break;
+                } else if (numeros[medio] < buscado) {
+                    areaLog.append("   " + buscado + " es mayor que " + numeros[medio] + ". Buscar en la derecha.\n\n");
+                    inicio = medio + 1;
+                } else {
+                    areaLog.append("   " + buscado + " es menor que " + numeros[medio] + ". Buscar en la izquierda.\n\n");
+                    fin = medio - 1;
+                }
+                paso++;
+            }
+
+            if (!encontrado) {
+                areaLog.append("❌ El número " + buscado + " no se encontró en la lista.\n");
+            }
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Por favor ingrese solo números válidos separados por comas.",
+                    "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        txtNumeros.setText("");
+        txtBuscar.setText("");
+        areaLog.setText("");
+        areaLog.append("✔ Interfaz limpiada correctamente. Lista para una nueva búsqueda.\n");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
