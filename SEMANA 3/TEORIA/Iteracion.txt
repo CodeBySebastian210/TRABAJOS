@@ -1,0 +1,6 @@
+La Iteración consiste en repetir un bloque de instrucciones mediante bucles (for, while, etc.), lo que permite resolver problemas de manera eficiente sin recurrir a 
+llamadas sucesivas a funciones. A diferencia de la Recursión, que requiere almacenar cada llamada en la pila de ejecución, la Iteración reutiliza el mismo espacio de 
+memoria, por lo tanto es más eficiente en términos de tiempo y recursos.
+
+Por ejemplo, al calcular el factorial de un número, tanto la versión recursiva como la iterativa logran el mismo resultado, pero la iterativa lo hace con menor consumo 
+de memoria y mejor rendimiento, especialmente cuando el número es grande.
