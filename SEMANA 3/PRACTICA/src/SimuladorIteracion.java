@@ -41,6 +41,11 @@ public class SimuladorIteracion extends javax.swing.JFrame {
         jLabel2.setText("Resultado / Proceso:");
 
         btnCalcular.setText("Calcular");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
 
@@ -91,6 +96,29 @@ public class SimuladorIteracion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+        // TODO add your handling code here:
+        try {
+            int numero = Integer.parseInt(txtNumero.getText().trim());
+            areaLog.setText(""); // limpiar área
+            areaLog.append("🔁 Iniciando proceso iterativo...\n");
+            areaLog.append("Sumando los números del 1 al " + numero + "\n\n");
+            
+            int suma = 0;
+            for (int i = 1; i <= numero; i++) {
+                suma += i; 
+                areaLog.append("Iteración " + i + " → suma parcial: " + suma + "\n");
+            }
+
+            areaLog.append("\n✅ Resultado final: La suma de 1 hasta " + numero + " es " + suma + "\n");
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Por favor ingrese un número válido.",
+                    "Error de entrada", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCalcularActionPerformed
 
     /**
      * @param args the command line arguments
