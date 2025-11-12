@@ -1,0 +1,8 @@
+El Backtracking (o técnica de vuelta atrás) es un enfoque recursivo optimizado para resolver problemas complejos mediante exploración sistemática.
+Funciona construyendo una solución parcial paso a paso y retrocediendo (“backtrack”) cuando se detecta que una opción no conduce a una solución válida.
+
+Por ejemplo, en el caso de un laberinto, el algoritmo intenta avanzar en distintas direcciones (arriba, abajo, izquierda, derecha). Si un camino lleva a un 
+callejón sin salida, retrocede al punto anterior y prueba otra dirección.
+
+Backtracking amplía las capacidades de la recursividad, permitiendo explorar todas las posibles soluciones a un problema y retroceder cuando una opción no es válida.
+Mientras la recursión se enfoca en dividir el problema en subproblemas similares, el Backtracking va más allá, aplicando una búsqueda inteligente y controlada.
