@@ -9,7 +9,45 @@
  * @author Lenovo
  */
 public class SimuladorBacktracking extends javax.swing.JFrame {
+    public boolean resolverLaberinto(int[][] lab, int x, int y, int[][] sol) {
+        int n = lab.length;
+        if (x == n - 1 && y == n - 1 && lab[x][y] == 1) {
+            sol[x][y] = 1;
+            areaLog.append("🏁 Llegamos a la meta (" + x + "," + y + ")\n");
+            return true;
+        }
 
+        if (esSeguro(lab, x, y)) {
+
+            sol[x][y] = 1;
+            areaLog.append("➡ Avanzando a (" + x + "," + y + ")\n");
+            if (resolverLaberinto(lab, x + 1, y, sol)) return true;
+            if (resolverLaberinto(lab, x, y + 1, sol)) return true;
+            sol[x][y] = 0;
+            areaLog.append("⛔ Retrocediendo desde (" + x + "," + y + ")\n");
+            return false;
+        }
+
+        areaLog.append("❌ Posición bloqueada o inválida: (" + x + "," + y + ")\n");
+        return false;
+    }
+    
+    public boolean esSeguro(int[][] lab, int x, int y) {
+        int n = lab.length;
+
+        return (x >= 0 && x < n &&
+                y >= 0 && y < n &&
+                lab[x][y] == 1);
+    }
+    
+    public void mostrarMatriz(int[][] matriz) {
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[0].length; j++) {
+                areaLog.append(matriz[i][j] + " ");
+            }
+            areaLog.append("\n");
+        }
+    }
     /**
      * Creates new form SimuladorBacktracking
      */
@@ -50,6 +88,11 @@ public class SimuladorBacktracking extends javax.swing.JFrame {
         jScrollPane2.setViewportView(areaLog);
 
         btnResolver.setText("Resolver");
+        btnResolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResolverActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
 
@@ -98,6 +141,39 @@ public class SimuladorBacktracking extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnResolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResolverActionPerformed
+        // TODO add your handling code here:
+        try {
+            String texto = areaLaberinto.getText().trim();
+            String[] filas = texto.split("\n");
+
+            int n = filas.length;
+            int[][] laberinto = new int[n][n];
+
+            for (int i = 0; i < n; i++) {
+                String[] columnas = filas[i].trim().split(" ");
+                for (int j = 0; j < n; j++) {
+                    laberinto[i][j] = Integer.parseInt(columnas[j]);
+                }
+            }
+
+            areaLog.setText("");
+            areaLog.append("🔍 Iniciando búsqueda con Backtracking...\n\n");
+            int[][] solucion = new int[n][n];
+            if (resolverLaberinto(laberinto, 0, 0, solucion)) {
+                areaLog.append("\n✔ Camino encontrado:\n");
+                mostrarMatriz(solucion);
+            } else {
+                areaLog.append("\n❌ No existe un camino hacia la salida.\n");
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error: revise que el laberinto esté formado solo por 0 y 1.",
+                    "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnResolverActionPerformed
 
     /**
      * @param args the command line arguments
