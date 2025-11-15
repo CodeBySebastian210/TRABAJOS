@@ -9,26 +9,32 @@
  * @author Lenovo
  */
 public class SimuladorBacktracking extends javax.swing.JFrame {
-    public boolean resolverLaberinto(int[][] lab, int x, int y, int[][] sol) {
+    public boolean resolverLaberinto(int[][] lab, int x, int y, int[][] sol, boolean[][] visitado) {
+
         int n = lab.length;
-        if (x == n - 1 && y == n - 1 && lab[x][y] == 1) {
+        if (x < 0 || x >= n || y < 0 || y >= n || lab[x][y] == 0 || visitado[x][y]) {
+            return false;
+        }
+
+        if (x == n - 1 && y == n - 1) {
             sol[x][y] = 1;
             areaLog.append("🏁 Llegamos a la meta (" + x + "," + y + ")\n");
             return true;
         }
 
-        if (esSeguro(lab, x, y)) {
+        visitado[x][y] = true;
+        sol[x][y] = 1;
+        areaLog.append("➡ Avanzando a (" + x + "," + y + ")\n");
+        
+        if (resolverLaberinto(lab, x + 1, y, sol, visitado)) return true;
+        if (resolverLaberinto(lab, x, y + 1, sol, visitado)) return true;
+        if (resolverLaberinto(lab, x - 1, y, sol, visitado)) return true;
+        if (resolverLaberinto(lab, x, y - 1, sol, visitado)) return true;
 
-            sol[x][y] = 1;
-            areaLog.append("➡ Avanzando a (" + x + "," + y + ")\n");
-            if (resolverLaberinto(lab, x + 1, y, sol)) return true;
-            if (resolverLaberinto(lab, x, y + 1, sol)) return true;
-            sol[x][y] = 0;
-            areaLog.append("⛔ Retrocediendo desde (" + x + "," + y + ")\n");
-            return false;
-        }
+        sol[x][y] = 0;
+        visitado[x][y] = false;
+        areaLog.append("⛔ Retrocediendo desde (" + x + "," + y + ")\n");
 
-        areaLog.append("❌ Posición bloqueada o inválida: (" + x + "," + y + ")\n");
         return false;
     }
     
@@ -166,7 +172,9 @@ public class SimuladorBacktracking extends javax.swing.JFrame {
             areaLog.setText("");
             areaLog.append("🔍 Iniciando búsqueda con Backtracking...\n\n");
             int[][] solucion = new int[n][n];
-            if (resolverLaberinto(laberinto, 0, 0, solucion)) {
+            boolean[][] visitado = new boolean[n][n];
+
+            if (resolverLaberinto(laberinto, 0, 0, solucion, visitado)) {
                 areaLog.append("\n✔ Camino encontrado:\n");
                 mostrarMatriz(solucion);
             } else {
